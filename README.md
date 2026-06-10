@@ -122,4 +122,4 @@ Grant this node to allow a player to manage server-wide Create OPAC config panel
 
 ## License
 
-All Rights Reserved.
+MIT
