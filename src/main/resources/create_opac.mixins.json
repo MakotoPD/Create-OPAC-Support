@@ -1,0 +1,32 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "pl.makoto.createsupportopac.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MixinContraptionCSO",
+    "MixinDeployerBehaviourCSO",
+    "MixinDeployerBlockEntityCSO",
+    "MixinHarvesterBehaviourCSO",
+    "MixinBlockBreakingBehaviourCSO",
+    "MixinPloughBehaviourCSO",
+    "MixinArmBlockEntityCSO",
+    "MixinOpenEndedPipeCSO",
+    "MixinSchematicannonCSO",
+    "MixinContraptionInteractionPacketCSO",
+    "MixinControlsInputPacketCSO",
+    "MixinTrainRelocationPacketCSO",
+    "MixinSuperGlueSelectionPacketCSO",
+    "MixinSuperGlueRemovalPacketCSO",
+    "MixinElevatorTargetFloorPacketCSO",
+    "MixinToolboxEquipPacketCSO",
+    "MixinToolboxDisposeAllPacketCSO",
+    "MixinBlockEntityConfigPacketCSO",
+    "MixinRadialWrenchMenuSubmitPacketCSO",
+    "MixinCommonEventsNeoForgeCSO",
+    "MixinServerCoreCSO"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

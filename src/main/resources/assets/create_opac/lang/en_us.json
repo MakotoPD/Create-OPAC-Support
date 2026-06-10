@@ -1,0 +1,13 @@
+{
+  "itemGroup.create_opac": "Example Mod Tab",
+  "block.create_opac.example_block": "Example Block",
+  "item.create_opac.example_item": "Example Item",
+
+  "create_opac.configuration.title": "Create OPAC Configs",
+  "create_opac.configuration.section.create_opac.common.toml": "Create OPAC Configs",
+  "create_opac.configuration.section.create_opac.common.toml.title": "Create OPAC Configs",
+  "create_opac.configuration.items": "Item List",
+  "create_opac.configuration.logDirtBlock": "Log Dirt Block",
+  "create_opac.configuration.magicNumberIntroduction": "Magic Number Text",
+  "create_opac.configuration.magicNumber": "Magic Number"
+}
