@@ -23,7 +23,8 @@ public class MixinDeployerBehaviourCSO {
         if (context.world == null) return;
         java.util.UUID actor = (context.contraption != null && context.contraption.entity != null)
                 ? context.contraption.entity.getControllingPlayer().orElse(null) : null;
-        if (!CreatePermissionChecker.isAllowed(context.world, pos, actor, CreateMachineType.DEPLOYER))
+        BlockPos anchor = context.contraption != null ? context.contraption.anchor : null;
+        if (!CreatePermissionChecker.isAllowedFromMachine(context.world, pos, actor, anchor, CreateMachineType.DEPLOYER))
             ci.cancel();
     }
 }

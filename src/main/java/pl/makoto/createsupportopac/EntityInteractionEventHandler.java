@@ -21,20 +21,19 @@ public class EntityInteractionEventHandler {
                 event.getLevel(), target.blockPosition(), player.getUUID(), resolveMachineType(target)))
             return;
 
-        // Claim blokuje interakcje — przepuść NPC z moda easy_npc
-        if (isEasyNPCEntity(target)) return;
-
         event.setCanceled(true);
     }
 
     private static CreateMachineType resolveMachineType(Entity target) {
+        if (isEasyNPCEntity(target))
+            return CreateMachineType.NPC;
         Entity vehicle = target.getVehicle();
         if (vehicle != null && vehicle.getClass().getName().contains("SeatEntity"))
             return CreateMachineType.MARKETPLACE;
         return CreateMachineType.ENTITY;
     }
 
-    private static boolean isEasyNPCEntity(Entity entity) {
+    public static boolean isEasyNPCEntity(Entity entity) {
         return "easy_npc".equals(
             entity.getType()
                   .builtInRegistryHolder()

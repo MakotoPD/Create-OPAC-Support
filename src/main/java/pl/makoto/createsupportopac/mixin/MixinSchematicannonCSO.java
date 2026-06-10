@@ -19,13 +19,15 @@ public class MixinSchematicannonCSO {
     @Shadow private boolean blockSkipped;
 
     @Inject(method = "tickPrinter",
-            at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "shouldPlaceCurrent"),
+            at = @At(value = "INVOKE", shift = At.Shift.AFTER,
+                    target = "Lcom/simibubi/create/content/schematics/SchematicPrinter;shouldPlaceCurrent(Lnet/minecraft/world/level/Level;Lcom/simibubi/create/content/schematics/SchematicPrinter$PlacementPredicate;)Z"),
             cancellable = true)
     private void cso_tickPrinter(CallbackInfo ci) {
         if (ci.isCancelled()) return;
         BlockEntity self = (BlockEntity) (Object) this;
         if (self.getLevel() == null) return;
-        if (!CreatePermissionChecker.isAllowed(self.getLevel(), printer.getCurrentTarget(), CreateMachineType.CANNON)) {
+        if (!CreatePermissionChecker.isAllowedFromMachine(self.getLevel(), printer.getCurrentTarget(),
+                self.getBlockPos(), CreateMachineType.CANNON)) {
             statusMsg = "searching";
             blockSkipped = true;
             ci.cancel();

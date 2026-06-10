@@ -15,7 +15,9 @@ public enum CreateMachineType {
     ELEVATOR("elevator", "Elevator"),
     WRENCH("wrench", "Wrench (radial menu)"),
     ENTITY("entity", "Entity interactions"),
-    MARKETPLACE("marketplace", "Marketplace shop");
+    MARKETPLACE("marketplace", "Marketplace shop"),
+    // Appended last — packet/GUI boolean arrays are indexed by ordinal within a session
+    NPC("npc", "EasyNPC interactions");
 
     public final String id;
     public final String displayName;

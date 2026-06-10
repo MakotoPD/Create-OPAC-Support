@@ -9,6 +9,7 @@
     "MixinDeployerBlockEntityCSO",
     "MixinHarvesterBehaviourCSO",
     "MixinBlockBreakingBehaviourCSO",
+    "MixinBlockBreakingKineticBlockEntityCSO",
     "MixinPloughBehaviourCSO",
     "MixinArmBlockEntityCSO",
     "MixinOpenEndedPipeCSO",

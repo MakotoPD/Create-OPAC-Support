@@ -3,12 +3,13 @@ package pl.makoto.createsupportopac.mixin;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import pl.makoto.createsupportopac.EntityInteractionEventHandler;
+import pl.makoto.createsupportopac.MarketplaceBlocks;
 import pl.makoto.createsupportopac.permission.CreatePermissionChecker;
 import pl.makoto.createsupportopac.settings.CreateMachineType;
 
@@ -21,10 +22,7 @@ public class MixinCommonEventsNeoForgeCSO {
     private void cso_onRightClickBlock(PlayerInteractEvent.RightClickBlock event, CallbackInfo ci) {
         if (!(event.getLevel() instanceof ServerLevel level)) return;
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
-        BlockEntity be = level.getBlockEntity(event.getPos());
-        if (be == null) return;
-        String name = be.getClass().getName();
-        if (!name.contains("VendorBlockEntity") && !name.contains("TableClothBlockEntity") && !name.contains("BlazeBurnerBlockEntity")) return;
+        if (!MarketplaceBlocks.isMarketplaceBlock(level, event.getPos())) return;
         if (CreatePermissionChecker.isAllowed(level, event.getPos(), player.getUUID(), CreateMachineType.MARKETPLACE))
             ci.cancel();
     }
@@ -35,6 +33,14 @@ public class MixinCommonEventsNeoForgeCSO {
     private void cso_onEntityInteract(PlayerInteractEvent.EntityInteract event, CallbackInfo ci) {
         if (!(event.getLevel() instanceof ServerLevel level)) return;
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        // EasyNPC: when the claim's NPC setting allows it, bypass OPAC's generic entity
+        // protection — our EntityInteractionEventHandler still re-applies the NPC check.
+        if (EntityInteractionEventHandler.isEasyNPCEntity(event.getTarget())
+                && CreatePermissionChecker.isAllowed(level, event.getTarget().blockPosition(),
+                        player.getUUID(), CreateMachineType.NPC)) {
+            ci.cancel();
+            return;
+        }
         if (!isHoldingShoppingList(player, event.getHand())) return;
         if (CreatePermissionChecker.isAllowed(level, event.getTarget().blockPosition(), player.getUUID(), CreateMachineType.MARKETPLACE))
             ci.cancel();
@@ -46,6 +52,12 @@ public class MixinCommonEventsNeoForgeCSO {
     private void cso_onInteractEntitySpecific(PlayerInteractEvent.EntityInteractSpecific event, CallbackInfo ci) {
         if (!(event.getLevel() instanceof ServerLevel level)) return;
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        if (EntityInteractionEventHandler.isEasyNPCEntity(event.getTarget())
+                && CreatePermissionChecker.isAllowed(level, event.getTarget().blockPosition(),
+                        player.getUUID(), CreateMachineType.NPC)) {
+            ci.cancel();
+            return;
+        }
         if (!isHoldingShoppingList(player, event.getHand())) return;
         if (CreatePermissionChecker.isAllowed(level, event.getTarget().blockPosition(), player.getUUID(), CreateMachineType.MARKETPLACE))
             ci.cancel();

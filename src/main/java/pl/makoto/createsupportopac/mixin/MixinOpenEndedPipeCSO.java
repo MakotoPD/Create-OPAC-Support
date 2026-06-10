@@ -16,6 +16,7 @@ import pl.makoto.createsupportopac.settings.CreateMachineType;
 public class MixinOpenEndedPipeCSO {
 
     @Shadow private Level world;
+    @Shadow private BlockPos pos;
     @Shadow private BlockPos outputPos;
 
     @Inject(method = "provideFluidToSpace",
@@ -26,7 +27,7 @@ public class MixinOpenEndedPipeCSO {
     private void cso_provideFluidToSpace(FluidStack fluid, boolean simulate,
                                          CallbackInfoReturnable<Boolean> cir) {
         if (cir.isCancelled() || simulate) return;
-        if (!CreatePermissionChecker.isAllowed(world, outputPos, CreateMachineType.PIPE))
+        if (!CreatePermissionChecker.isAllowedFromMachine(world, outputPos, pos, CreateMachineType.PIPE))
             cir.setReturnValue(false);
     }
 
@@ -37,7 +38,7 @@ public class MixinOpenEndedPipeCSO {
             cancellable = true)
     private void cso_removeFluidFromSpace(boolean simulate, CallbackInfoReturnable<FluidStack> cir) {
         if (cir.isCancelled() || simulate) return;
-        if (!CreatePermissionChecker.isAllowed(world, outputPos, CreateMachineType.PIPE))
+        if (!CreatePermissionChecker.isAllowedFromMachine(world, outputPos, pos, CreateMachineType.PIPE))
             cir.setReturnValue(FluidStack.EMPTY);
     }
 }

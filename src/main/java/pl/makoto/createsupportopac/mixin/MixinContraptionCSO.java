@@ -18,7 +18,8 @@ public class MixinContraptionCSO {
     private void cso_movementAllowed(BlockState state, Level level, BlockPos pos,
                                      CallbackInfoReturnable<Boolean> cir) {
         if (cir.isCancelled()) return;
-        if (!CreatePermissionChecker.isAllowed(level, pos, CreateMachineType.CONTRAPTION))
+        Contraption self = (Contraption) (Object) this;
+        if (!CreatePermissionChecker.isAllowedFromMachine(level, pos, self.anchor, CreateMachineType.CONTRAPTION))
             cir.setReturnValue(false);
     }
 }
